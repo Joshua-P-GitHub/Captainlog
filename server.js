@@ -2,7 +2,7 @@ const db = require('./config/db')
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+const Log = require('./models/logs')
 
 
 const reactViewsEngine = require('jsx-view-engine').createEngine();
@@ -29,7 +29,7 @@ app.post('/logs', async (req,res) => {
     req.body.shipIsBroken = false
   }
   try {
-    res.send(req.body)
+    const newLog = Log.create(req.body)
   } catch (error) {
     
   }
