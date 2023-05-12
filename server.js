@@ -18,8 +18,21 @@ app.use(express.urlencoded({ extended: false}))
 
 //INDUCES
 //NEW
-app.get('/new', (req,res) => {
+app.get('/new', async (req,res) => {
   res.render('NEW')
+})
+//CREATE
+app.post('/logs', async (req,res) => {
+  if (req.body.shipIsBroken === 'on'){
+    req.body.shipIsBroken = true
+  } else {
+    req.body.shipIsBroken = false
+  }
+  try {
+    res.send(req.body)
+  } catch (error) {
+    
+  }
 })
 
 
