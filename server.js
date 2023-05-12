@@ -17,6 +17,15 @@ app.use(express.urlencoded({ extended: false}))
 
 
 //INDUCES
+//INDEX
+app.get('/logs', async (req,res) => {
+  try {
+    const logsFound = await Log.find({})
+    res.render('Index', {logs: logsFound})
+  } catch (error) {
+    
+  }
+})
 //NEW
 app.get('/new', async (req,res) => {
   res.render('NEW')
@@ -29,7 +38,7 @@ app.post('/logs', async (req,res) => {
     req.body.shipIsBroken = false
   }
   try {
-    const newLog = Log.create(req.body)
+    const newLog = await Log.create(req.body)
   } catch (error) {
     
   }
