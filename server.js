@@ -23,7 +23,7 @@ app.get('/logs', async (req,res) => {
     const logsFound = await Log.find({})
     res.render('Index', {logs: logsFound})
   } catch (error) {
-    
+    res.status(400).send(error) 
   }
 })
 //NEW
@@ -40,7 +40,17 @@ app.post('/logs', async (req,res) => {
   try {
     const newLog = await Log.create(req.body)
   } catch (error) {
-    
+    res.status(400).send(error) 
+  }
+})
+
+//SHOW
+app.get('/log/:id', async (req,res) => {
+  try {
+    const logFound = await Log.findById(req.params.id)
+    res.render('Show', {log: logFound})
+  } catch (error) {
+    res.status(400).send(error) 
   }
 })
 

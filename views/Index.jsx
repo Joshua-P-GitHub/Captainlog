@@ -10,7 +10,7 @@ export default class Index extends Component {
         <ul>
         {logs.map((log) => {
           return <li>
-            <a href={`/log/${log.title}`}>Title: {log.title}</a>
+            <a href={`/log/${log.id}`}>Title: {log.title}</a>
           </li>
         })}          
         </ul>
