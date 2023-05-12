@@ -10,7 +10,10 @@ export default class Index extends Component {
         <ul>
         {logs.map((log) => {
           return <li>
-            <a href={`/log/${log.id}`}>Title: {log.title}</a>
+            <a href={`/logs/${log.id}`}>Title: {log.title}</a>
+            <form action={`/logs/${log.id}?_method=DELETE`} method='POST'>
+              <input type="submit" value="Dlete" />
+            </form>
           </li>
         })}          
         </ul>

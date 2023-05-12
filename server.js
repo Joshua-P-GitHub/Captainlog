@@ -2,8 +2,8 @@ const db = require('./config/db')
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const Log = require('./models/logs')
-
+const MO = require('method-override')
+const logController = require('./controllers/logController')
 
 const reactViewsEngine = require('jsx-view-engine').createEngine();
 app.engine('jsx', reactViewsEngine);
@@ -13,46 +13,10 @@ app.set('view engine', 'jsx');
 app.set('views', './views');
 //middleware
 app.use(express.urlencoded({ extended: false}))
+app.use(MO("_method"));
 
 
-
-//INDUCES
-//INDEX
-app.get('/logs', async (req,res) => {
-  try {
-    const logsFound = await Log.find({})
-    res.render('Index', {logs: logsFound})
-  } catch (error) {
-    res.status(400).send(error) 
-  }
-})
-//NEW
-app.get('/new', async (req,res) => {
-  res.render('NEW')
-})
-//CREATE
-app.post('/logs', async (req,res) => {
-  if (req.body.shipIsBroken === 'on'){
-    req.body.shipIsBroken = true
-  } else {
-    req.body.shipIsBroken = false
-  }
-  try {
-    const newLog = await Log.create(req.body)
-  } catch (error) {
-    res.status(400).send(error) 
-  }
-})
-
-//SHOW
-app.get('/log/:id', async (req,res) => {
-  try {
-    const logFound = await Log.findById(req.params.id)
-    res.render('Show', {log: logFound})
-  } catch (error) {
-    res.status(400).send(error) 
-  }
-})
+app.use('/logs', logController)
 
 
 
